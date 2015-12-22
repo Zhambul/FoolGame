@@ -1,0 +1,76 @@
+﻿<Window x:Class="FoolGame.Uil.Window.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:card="clr-namespace:FoolGame.Bll.Card"
+        Title="Game" 
+        WindowState="Maximized" 
+        Background="AliceBlue"
+        >
+    
+    <Grid>
+        <StackPanel>
+            <ListView Background="AliceBlue"
+                      ItemsSource="{Binding OpponentCards}" BorderThickness="0" 
+                      HorizontalAlignment="Center">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="card:Card">
+                        <StackPanel Orientation="Horizontal" Width="80" Height="100" Background="AliceBlue">
+                            <Image Source="{Binding CurrentImage}"></Image>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">            
+                <Grid 
+                        Background="DarkGreen"
+                        Height="500" Width="500" 
+                        AllowDrop="True"
+                        MouseMove="Table_OnMouseMove"
+                        >
+                    <ListView Background="DarkGreen" VerticalAlignment="Center"
+                              ItemsSource="{Binding TableCards}" BorderThickness="0" HorizontalAlignment="Center">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="card:Card">
+                                <StackPanel 
+                                    Background="DarkGreen" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Width="80" Height="100">
+                                    <Image Source="{Binding CurrentImage}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Grid>
+                <TextBlock Text="{Binding DeckRemainingCards}"/>
+                <Image Source="{Binding TrumpCard}"  Width="80" Height="100"></Image>
+            </StackPanel>
+
+            <ListView Name="UserListView" Background="AliceBlue" ItemsSource="{Binding Cards}" BorderThickness="0" HorizontalAlignment="Center">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="card:Card">
+                        <StackPanel Orientation="Horizontal" Width="80" Height="100" Background="AliceBlue">
+                            <Image Source="{Binding CurrentImage}" 
+                                   MouseDown="Card_OnMouseDown"
+                                   MouseUp="Card_OnMouseUp"
+                                   MouseMove="Card_OnMouseMove"></Image>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
