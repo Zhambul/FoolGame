@@ -75,6 +75,7 @@
     <Compile Include="Bll\Game\Game.cs" />
     <Compile Include="Bll\Game\IDeckChanged.cs" />
     <Compile Include="Bll\Game\IGame.cs" />
+    <Compile Include="Bll\Game\IGameCallback.cs" />
     <Compile Include="Bll\Game\IPlayer.cs" />
     <Compile Include="Bll\Game\Player.cs" />
     <Compile Include="Bll\Util.cs" />

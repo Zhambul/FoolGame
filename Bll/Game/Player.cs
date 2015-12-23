@@ -11,6 +11,7 @@ namespace FoolGame.Bll.Game
     {
         public ICardSet CardSet { get; private set; }
         public int CardLimit { get; private set; }
+        public GameRole GameRole { get; set; }
 
         public void AddCard(ICard card)
         {

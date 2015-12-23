@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using FoolGame.Annotations;
-using FoolGame.Bll;
 using FoolGame.Bll.Card;
 using FoolGame.Bll.CardFabric;
 using FoolGame.Bll.Game;
@@ -17,8 +16,9 @@ namespace FoolGame.Uil.Window
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged, IDeckChanged
+    public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged, IDeckChanged, IGameCallback
     {
+        #region vars
         private ObservableCollection<ICard> _opponentCards;
         public ObservableCollection<ICard> OpponentCards
         {
@@ -74,19 +74,66 @@ namespace FoolGame.Uil.Window
             }
         }
 
+        private Visibility _passButtonVisibility;
+        public Visibility PassButtonVisibility
+        {
+            get { return _passButtonVisibility; }
+            set
+            {
+                _passButtonVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _getCardsButtonVisibility;
+        public Visibility GetCardsButtonVisibility
+        {
+            get { return _getCardsButtonVisibility; }
+            set
+            {
+                _getCardsButtonVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _passedCardsCountString;
+
+        public string PassedCardsCountString
+        {
+            get { return _passedCardsCountString; }
+            set
+            {
+                _passedCardsCountString = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _roleText;
+        public String RoleText
+        {
+            get { return _roleText; }
+            set
+            {
+                _roleText = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        private int _passedCardsCountInt;
+
         private bool _isDraging;
         private IGame _game;
         private ICard _currentCard;
         IPlayer _userPlayer;
         IPlayer _opponentPlayer;
-
-       
+        #endregion
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            TableCards = new ObservableCollection<ICard>();
             InitGame();
+            PassButtonVisibility = Visibility.Hidden;
+            GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnGameStarted();
         }
 
@@ -95,16 +142,16 @@ namespace FoolGame.Uil.Window
             IDeck deck = new Deck(new CardSet(), new CardFabric(new CardIniter()), this);
             _userPlayer = new Player(new CardSet());
             _opponentPlayer = new Player(new CardSet());
-            _game = new Game(_userPlayer,_opponentPlayer,deck);
-
+            _game = new Game(_userPlayer,_opponentPlayer,deck,this);
+            
             OpponentCards = _opponentPlayer.CardSet.Cards;
             Cards = _userPlayer.CardSet.Cards;
-
+            TableCards = _game.TableCards.Cards;
         }
 
         public void OnDeckChanged(int countOfCardsInDeck)
         {
-            DeckRemainingCards = countOfCardsInDeck.ToString();
+            DeckRemainingCards = "Карт в колоде "+ Environment.NewLine + countOfCardsInDeck;
         }
 
         public void OnTrumpCardSelected(ICard trumpCard)
@@ -137,13 +184,12 @@ namespace FoolGame.Uil.Window
             if (_isDraging && mouseEventArgs.LeftButton == MouseButtonState.Released)
             {
                 _isDraging = false;
-                _userPlayer.RemoveCard(_currentCard);
-                Cards.Remove(_currentCard);
-                TableCards.Add(_currentCard);
+                if (_currentCard == null)
+                {
+                    return;
+                }
+                _game.OnPlayerMove(_currentCard);
                 _currentCard = null;
-
-                if(_userPlayer.CardSet.Count==3)
-                _game.OnMovesEnded();
             }
         }
 
@@ -155,5 +201,48 @@ namespace FoolGame.Uil.Window
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void OnNotSuitableCard()
+        {
+            MessageBox.Show("Выбере другую карту");
+        }
+
+        public void OnPassButtonVisible()
+        {
+            _game.CheckWin();
+            PassButtonVisibility = Visibility.Visible;
+        }
+
+        public void OnGetCardsButtonVisible()
+        {
+            _game.CheckWin();
+            GetCardsButtonVisibility = Visibility.Visible;
+        }
+
+        public void OnRoleSwith(bool isAttacking)
+        {
+            RoleText = isAttacking ? "Вы атакуете" : "Вы защищаетесь";
+        }
+
+        public void OnGetCardsButtonHidden()
+        {
+            GetCardsButtonVisibility = Visibility.Hidden;
+        }
+
+        private void PassButton_Click(object sender, RoutedEventArgs e)
+        {
+            _passedCardsCountInt += _game.Pass();
+            PassedCardsCountString = "Карт отбито" + Environment.NewLine + _passedCardsCountInt;
+            PassButtonVisibility = Visibility.Hidden;
+            _game.OnMovesEnded(true);
+        }
+
+        private void GetCardsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _game.GetCardsFromTableToUser();
+            GetCardsButtonVisibility = Visibility.Hidden;
+            _game.OnMovesEnded(false);
+        }
+
     }
 }

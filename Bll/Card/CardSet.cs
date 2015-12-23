@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -36,6 +37,11 @@ namespace FoolGame.Bll.Card
         public ICard GetLastCard()
         {
             return Cards.Last();
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
