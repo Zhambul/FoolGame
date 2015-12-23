@@ -43,20 +43,33 @@ namespace FoolGame.Bll.Game
 
         private void GiveCards(IPlayer player, bool userPlayer)
         {
-            while (player.CardLimit > player.CardSet.Count && _deck.CardSet.Count != 0)
+            while (player.CardLimit > player.CardSet.Count)
             {
-                var card = _deck.GetNextCard();
+                ICard card;
+                if (_deck.CardSet.Count == 0 && _deck.TrumpCard != null)
+                {
+                    card = _deck.TrumpCard;
+                    _deck.TrumpCard = null;
+                    _gameCallback.OnTrumpCardChosen();
+                }
+                else if (_deck.CardSet.Count == 0)
+                {
+                    break;
+                }
+                else { 
+                    card = _deck.GetNextCard();
+                }
                 if (userPlayer)
                 {
                     card.VisibilityState = CardVisibilityState.Visible;
                 }
                 player.AddCard(card);
+
             }
         }
 
         public void OnMovesEnded(bool switchRoles)
         {
-            _gameCallback.OnGetCardsButtonHidden();
             GiveCards();
 
             if (switchRoles)
@@ -90,6 +103,8 @@ namespace FoolGame.Bll.Game
             {
                 return;
             }
+
+            _gameCallback.OnGetCardsButtonHidden();
             OnComputerMove(card);
         }
 
@@ -160,7 +175,6 @@ namespace FoolGame.Bll.Game
             if (CompPlayer.GameRole == GameRole.Attacker)
             {
                 CompPlayerAttacks(card);
-                _gameCallback.OnGetCardsButtonVisible();
             }
             else
             {
@@ -310,6 +324,7 @@ namespace FoolGame.Bll.Game
                 }
                 bestCard = GetBestCard(suitableCardsFotAttack);
             }
+            _gameCallback.OnGetCardsButtonVisible();
             bestCard.VisibilityState = CardVisibilityState.Visible;
             CompPlayer.CardSet.RemoveCard(bestCard);
             TableCards.Cards.Add(bestCard);

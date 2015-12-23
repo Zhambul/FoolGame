@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FoolGame.Bll.Card;
+﻿using FoolGame.Bll.Card;
 
 namespace FoolGame.Bll.Game
 {
@@ -19,7 +14,5 @@ namespace FoolGame.Bll.Game
         GameRole GameRole { get; set; }
         void AddCard(ICard card);
         void RemoveCard(ICard card);
-        void OnMoveFinished();
-        void OnMoveStarted();
     }
 }

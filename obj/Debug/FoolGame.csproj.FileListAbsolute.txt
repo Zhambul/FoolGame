@@ -11,3 +11,4 @@ C:\My documents\Visual Studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame
 C:\My documents\Visual Studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.csproj.GenerateResource.Cache
 C:\My documents\Visual Studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.exe
 C:\My documents\Visual Studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.pdb
+c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.csprojResolveAssemblyReference.cache

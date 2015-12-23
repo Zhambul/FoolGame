@@ -151,7 +151,7 @@ namespace FoolGame.Uil.Window
 
         public void OnDeckChanged(int countOfCardsInDeck)
         {
-            DeckRemainingCards = "Карт в колоде "+ Environment.NewLine + countOfCardsInDeck;
+            DeckRemainingCards = "Карт в колоде "+ Environment.NewLine + (countOfCardsInDeck+1);
         }
 
         public void OnTrumpCardSelected(ICard trumpCard)
@@ -229,6 +229,11 @@ namespace FoolGame.Uil.Window
             GetCardsButtonVisibility = Visibility.Hidden;
         }
 
+        public void OnTrumpCardChosen()
+        {
+            TrumpCard = null;
+        }
+
         private void PassButton_Click(object sender, RoutedEventArgs e)
         {
             _passedCardsCountInt += _game.Pass();
@@ -243,6 +248,5 @@ namespace FoolGame.Uil.Window
             GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnMovesEnded(false);
         }
-
     }
 }

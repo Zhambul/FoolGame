@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FoolGame.Bll.Game
+﻿namespace FoolGame.Bll.Game
 {
     interface IGameCallback
     {
@@ -13,5 +7,6 @@ namespace FoolGame.Bll.Game
         void OnGetCardsButtonVisible();
         void OnRoleSwith(bool isAttacking);
         void OnGetCardsButtonHidden();
+        void OnTrumpCardChosen();
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FoolGame.Bll.Card;
+﻿using FoolGame.Bll.Card;
 
 namespace FoolGame.Bll.Game
 {
@@ -22,17 +17,6 @@ namespace FoolGame.Bll.Game
         {
             CardSet.RemoveCard(card);
         }
-
-        public void OnMoveFinished()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnMoveStarted()
-        {
-            throw new NotImplementedException();
-        }
-
         public Player(CardSet cardSet)
         {
             CardSet = cardSet;
