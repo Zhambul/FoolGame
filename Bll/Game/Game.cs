@@ -21,8 +21,16 @@ namespace FoolGame.Bll.Game
             _deck = deck;
             _gameCallback = gameCallback;
             TableCards = new CardSet();
-            UserPlayer.GameRole = GameRole.Defender;
-            CompPlayer.GameRole = GameRole.Attacker;
+            if (new Random().Next(2) == 1)
+            {
+                UserPlayer.GameRole = GameRole.Defender;
+                CompPlayer.GameRole = GameRole.Attacker;
+            }
+            else
+            {
+                UserPlayer.GameRole = GameRole.Attacker;
+                CompPlayer.GameRole = GameRole.Defender;
+            }
             _gameCallback.OnRoleSwith(UserPlayer.GameRole == GameRole.Attacker);
         }
 
