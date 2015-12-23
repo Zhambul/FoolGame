@@ -6,7 +6,7 @@ namespace FoolGame.Bll.Game
     {
         IPlayer UserPlayer { get; }
         IPlayer CompPlayer { get; }
-        CardSet TableCards { get; set; }
+        ICardCollection TableCards { get; set; }
         void OnGameStarted();
         void OnMovesEnded(bool switchRoles);
         void OnPlayerMove(ICard card);

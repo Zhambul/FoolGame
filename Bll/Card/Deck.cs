@@ -9,13 +9,13 @@ namespace FoolGame.Bll.Card
         private readonly IDeckChanged _gameWindow;
         public CardSuit TrumpSuit { get; private set; }
         public ICard TrumpCard { get; set; }
-        public ICardSet CardSet { get; private set; }
+        public ICardCollection CardCollection { get; private set; }
         public ICardFabric CardFabric { get; private set; }
         public int CardLimit { get; private set; }
 
-        public Deck(ICardSet cardSet, ICardFabric cardFabric, IDeckChanged gameWindow)
+        public Deck(ICardCollection cardCollection, ICardFabric cardFabric, IDeckChanged gameWindow)
         {
-            CardSet = cardSet;
+            CardCollection = cardCollection;
             CardFabric = cardFabric;
             CardLimit = 36;
             _gameWindow = gameWindow;
@@ -28,12 +28,12 @@ namespace FoolGame.Bll.Card
         {
             while (true)
             {
-                int randomIndex = new Random().Next(CardSet.Count - 1);
-                var randomCard = CardSet.GetCardAt(randomIndex);
+                int randomIndex = new Random().Next(CardCollection.Count - 1);
+                var randomCard = CardCollection.GetCardAt(randomIndex);
                 if (randomCard.Suit == TrumpSuit)
                 {
                     _gameWindow.OnTrumpCardSelected(randomCard);
-                    CardSet.RemoveCard(randomCard);
+                    CardCollection.RemoveCard(randomCard);
                     return randomCard;
                 }
             }
@@ -53,18 +53,18 @@ namespace FoolGame.Bll.Card
 
         private void FullfillCardSet()
         {
-            while (CardSet.Count != CardLimit)
+            while (CardCollection.Count != CardLimit)
             {
-                CardSet.AddCard(CardFabric.GetCard());
+                CardCollection.AddCard(CardFabric.GetCard());
             }
         }
      
         public ICard GetNextCard()
         {
-            int index = new Random().Next(0,CardSet.Count+1);
-            ICard card = CardSet.Cards[index];
-            CardSet.RemoveCard(card);
-            _gameWindow.OnDeckChanged(CardSet.Count);
+            int index = new Random().Next(0,CardCollection.Count+1);
+            ICard card = CardCollection.Cards[index];
+            CardCollection.RemoveCard(card);
+            _gameWindow.OnDeckChanged(CardCollection.Count);
             return card;
         }
     }

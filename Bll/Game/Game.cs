@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using FoolGame.Bll.Card;
+using FoolGame.Bll.Vk;
 
 namespace FoolGame.Bll.Game
 {
@@ -13,14 +14,16 @@ namespace FoolGame.Bll.Game
 
         private readonly IDeck _deck;
         private readonly IGameCallback _gameCallback;
-        public CardSet TableCards { get; set; }
-        public Game(IPlayer userPlayer, IPlayer compPlayer, IDeck deck, IGameCallback gameCallback)
+        public ICardCollection TableCards { get; set; }
+        private ISharable _sharable;
+        public Game(IPlayer userPlayer, IPlayer compPlayer, IDeck deck,ICardCollection tableCards, IGameCallback gameCallback, ISharable sharable)
         {
             UserPlayer = userPlayer;
             CompPlayer = compPlayer;
             _deck = deck;
             _gameCallback = gameCallback;
-            TableCards = new CardSet();
+            _sharable = sharable;
+            TableCards = tableCards;
             if (new Random().Next(2) == 1)
             {
                 UserPlayer.GameRole = GameRole.Defender;
@@ -51,16 +54,16 @@ namespace FoolGame.Bll.Game
 
         private void GiveCards(IPlayer player, bool userPlayer)
         {
-            while (player.CardLimit > player.CardSet.Count)
+            while (player.CardLimit > player.CardCollection.Count)
             {
                 ICard card;
-                if (_deck.CardSet.Count == 0 && _deck.TrumpCard != null)
+                if (_deck.CardCollection.Count == 0 && _deck.TrumpCard != null)
                 {
                     card = _deck.TrumpCard;
                     _deck.TrumpCard = null;
                     _gameCallback.OnTrumpCardChosen();
                 }
-                else if (_deck.CardSet.Count == 0)
+                else if (_deck.CardCollection.Count == 0)
                 {
                     break;
                 }
@@ -126,7 +129,7 @@ namespace FoolGame.Bll.Game
             
             if (card.Suit == _deck.TrumpSuit && tableCard.Suit != _deck.TrumpSuit)
             {
-                UserPlayer.CardSet.RemoveCard(card);
+                UserPlayer.CardCollection.RemoveCard(card);
                 TableCards.Cards.Add(card);
             }
             else if (card.Suit != _deck.TrumpSuit && tableCard.Suit == _deck.TrumpSuit)
@@ -137,7 +140,7 @@ namespace FoolGame.Bll.Game
             {
                 if (card.Suit == tableCard.Suit && card.Value > tableCard.Value)
                 {
-                    UserPlayer.CardSet.RemoveCard(card);
+                    UserPlayer.CardCollection.RemoveCard(card);
                     TableCards.Cards.Add(card);
                 }
                 else
@@ -193,11 +196,14 @@ namespace FoolGame.Bll.Game
 
         public void CheckWin()
         {
-            if (UserPlayer.CardSet.Count == 0)
+            if (UserPlayer.CardCollection.Count == 0)
             {
-                MessageBox.Show("Поздравляю! Вы выйграли");
+                if (MessageBox.Show("Поздравляю! Вы выйграли", "Поделиться") == MessageBoxResult.OK)
+                {
+                    _sharable.Share();
+                }
             }
-            else if (CompPlayer.CardSet.Count == 0)
+            else if (CompPlayer.CardCollection.Count == 0)
             {
                 MessageBox.Show("Вы проиграли");
             } 
@@ -221,7 +227,7 @@ namespace FoolGame.Bll.Game
             {
                 var card = TableCards.GetLastCard();
                 TableCards.Cards.Remove(card);
-                UserPlayer.CardSet.AddCard(card);
+                UserPlayer.CardCollection.AddCard(card);
             }
         }
 
@@ -236,7 +242,7 @@ namespace FoolGame.Bll.Game
             }
             var resultCard = GetBestCard(suitableCards);
             resultCard.VisibilityState = CardVisibilityState.Visible;
-            CompPlayer.CardSet.RemoveCard(resultCard);
+            CompPlayer.CardCollection.RemoveCard(resultCard);
             TableCards.Cards.Add(resultCard);
 
             _gameCallback.OnPassButtonVisible();
@@ -249,7 +255,7 @@ namespace FoolGame.Bll.Game
                 var tableCard = TableCards.Cards.Last();
                 tableCard.VisibilityState = CardVisibilityState.NotVisible;
                 TableCards.RemoveCard(tableCard);
-                CompPlayer.CardSet.AddCard(tableCard);
+                CompPlayer.CardCollection.AddCard(tableCard);
             }
         }
 
@@ -284,7 +290,7 @@ namespace FoolGame.Bll.Game
         private List<ICard> GetSuitableCardsForDefend(ICard card)
         {
             var result = new List<ICard>();
-            foreach (var compCard in CompPlayer.CardSet.Cards)
+            foreach (var compCard in CompPlayer.CardCollection.Cards)
             {
                 if (compCard.Suit == _deck.TrumpSuit)
                 {
@@ -320,7 +326,7 @@ namespace FoolGame.Bll.Game
 
             if (card == null)
             {
-                bestCard = GetBestCard(CompPlayer.CardSet.Cards.ToList());
+                bestCard = GetBestCard(CompPlayer.CardCollection.Cards.ToList());
             }
             else
             {
@@ -334,13 +340,13 @@ namespace FoolGame.Bll.Game
             }
             _gameCallback.OnGetCardsButtonVisible();
             bestCard.VisibilityState = CardVisibilityState.Visible;
-            CompPlayer.CardSet.RemoveCard(bestCard);
+            CompPlayer.CardCollection.RemoveCard(bestCard);
             TableCards.Cards.Add(bestCard);
         }
 
         private List<ICard> GetSuitableCardsForAttack()
         {
-            return (from compCard in CompPlayer.CardSet.Cards 
+            return (from compCard in CompPlayer.CardCollection.Cards 
                     from tableCard in TableCards.Cards 
                     where compCard.Value == tableCard.Value 
                     select compCard).ToList();

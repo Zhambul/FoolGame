@@ -2,7 +2,7 @@
 
 namespace FoolGame.Bll.Card
 {
-    interface ICardSet
+    interface ICardCollection
     {
         ObservableCollection<ICard> Cards { get; set; }
         int Count { get; }

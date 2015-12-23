@@ -34,6 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -45,6 +52,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="VkNet">
+      <HintPath>..\packages\VkNet.1.20.0\lib\net40\VkNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -54,6 +65,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Uil\Window\CaptchaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Uil\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,10 +82,10 @@
     <Compile Include="Bll\CardFabric\ICardFabric.cs" />
     <Compile Include="Bll\CardFabric\ICardIniter.cs" />
     <Compile Include="Bll\Card\Card.cs" />
-    <Compile Include="Bll\Card\CardSet.cs" />
+    <Compile Include="Bll\Card\CardCollection.cs" />
     <Compile Include="Bll\Card\Deck.cs" />
     <Compile Include="Bll\Card\ICard.cs" />
-    <Compile Include="Bll\Card\ICardSet.cs" />
+    <Compile Include="Bll\Card\ICardCollection.cs" />
     <Compile Include="Bll\Card\IDeck.cs" />
     <Compile Include="Bll\Game\Game.cs" />
     <Compile Include="Bll\Game\IDeckChanged.cs" />
@@ -79,7 +94,12 @@
     <Compile Include="Bll\Game\IPlayer.cs" />
     <Compile Include="Bll\Game\Player.cs" />
     <Compile Include="Bll\Util.cs" />
+    <Compile Include="Bll\Vk\ISharable.cs" />
+    <Compile Include="Bll\Vk\VkHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Uil\Window\CaptchaPage.xaml.cs">
+      <DependentUpon>CaptchaPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Uil\Window\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,6 +123,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -226,6 +247,7 @@
   <ItemGroup>
     <None Include="Images\Spade_Ten.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

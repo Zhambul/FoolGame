@@ -6,7 +6,7 @@ namespace FoolGame.Bll.Card
     {
         CardSuit TrumpSuit { get; }
         ICard TrumpCard { get; set; }
-        ICardSet CardSet { get; }
+        ICardCollection CardCollection { get; }
         ICardFabric CardFabric { get; }
         int CardLimit { get; }
         ICard GetNextCard();

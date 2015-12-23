@@ -4,22 +4,22 @@ namespace FoolGame.Bll.Game
 {
     class Player : IPlayer
     {
-        public ICardSet CardSet { get; private set; }
+        public ICardCollection CardCollection { get; private set; }
         public int CardLimit { get; private set; }
         public GameRole GameRole { get; set; }
 
         public void AddCard(ICard card)
         {
-            CardSet.AddCard(card);
+            CardCollection.AddCard(card);
         }
 
         public void RemoveCard(ICard card)
         {
-            CardSet.RemoveCard(card);
+            CardCollection.RemoveCard(card);
         }
-        public Player(CardSet cardSet)
+        public Player(CardCollection cardCollection)
         {
-            CardSet = cardSet;
+            CardCollection = cardCollection;
             CardLimit = 6;
         }
     }

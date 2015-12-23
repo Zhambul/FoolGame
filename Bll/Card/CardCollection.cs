@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace FoolGame.Bll.Card
 {
-    class CardSet : ICardSet
+    class CardCollection : ICardCollection
     {
         public ObservableCollection<ICard> Cards { get; set; }
 
-        public CardSet()
+        public CardCollection()
         {
             Cards = new ObservableCollection<ICard>();
         }

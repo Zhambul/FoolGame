@@ -9,7 +9,7 @@ namespace FoolGame.Bll.Game
     }
     interface IPlayer
     {
-        ICardSet CardSet { get; }
+        ICardCollection CardCollection { get; }
         int CardLimit { get; }
         GameRole GameRole { get; set; }
         void AddCard(ICard card);

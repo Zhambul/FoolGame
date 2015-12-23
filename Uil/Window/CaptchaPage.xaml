@@ -1,0 +1,10 @@
+﻿<Window x:Class="FoolGame.Uil.Window.CaptchaPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CaptchaPage" Height="300" Width="300">
+    <StackPanel>
+        <TextBlock FontFamily="PT Sans" Margin="5 5 0 5" FontSize="10pt" Foreground="#567ca4" Height="50"><Run Text="Введите текст с картинки"/><LineBreak/><Run Text=" в браузере"/></TextBlock>
+        <TextBox  Margin="5" Text="{Binding CaptchaKey}"></TextBox>
+        <Button   Background="#567ca4 "  FontFamily="PT Sans" FontSize="10pt" Foreground="White" Command="{Binding EnterCommand}" Height="19" Margin="20,0" Click="Button_Click"   >Отправить</Button>
+    </StackPanel>
+</Window>

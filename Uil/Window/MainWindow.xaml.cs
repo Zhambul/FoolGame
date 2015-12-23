@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using FoolGame.Annotations;
+using FoolGame.Bll;
 using FoolGame.Bll.Card;
 using FoolGame.Bll.CardFabric;
 using FoolGame.Bll.Game;
+using FoolGame.Bll.Vk;
+using VkNet;
+using VkNet.Categories;
+using VkNet.Enums.Filters;
+using VkNet.Exception;
 
 namespace FoolGame.Uil.Window
 {
@@ -135,23 +143,29 @@ namespace FoolGame.Uil.Window
             PassButtonVisibility = Visibility.Hidden;
             GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnGameStarted();
+
+          
         }
 
         private void InitGame()
         {
-            IDeck deck = new Deck(new CardSet(), new CardFabric(new CardIniter()), this);
-            _userPlayer = new Player(new CardSet());
-            _opponentPlayer = new Player(new CardSet());
-            _game = new Game(_userPlayer,_opponentPlayer,deck,this);
+            IDeck deck = new Deck(new CardCollection(), new CardFabric(new CardIniter()), this);
+            _userPlayer = new Player(new CardCollection());
+            _opponentPlayer = new Player(new CardCollection());
+            _game = new Game(_userPlayer,_opponentPlayer,deck,new CardCollection(),this, new VkHelper());
             
-            OpponentCards = _opponentPlayer.CardSet.Cards;
-            Cards = _userPlayer.CardSet.Cards;
+            OpponentCards = _opponentPlayer.CardCollection.Cards;
+            Cards = _userPlayer.CardCollection.Cards;
             TableCards = _game.TableCards.Cards;
+            if (MessageBox.Show("Поздравляю! Вы выйграли", "Поделиться") == MessageBoxResult.OK)
+            {
+                new VkHelper().Share();
+            }
         }
 
         public void OnDeckChanged(int countOfCardsInDeck)
         {
-            DeckRemainingCards = "Карт в колоде "+ Environment.NewLine + (countOfCardsInDeck+1);
+            DeckRemainingCards = "Карт в колоде "+ Environment.NewLine + countOfCardsInDeck;
         }
 
         public void OnTrumpCardSelected(ICard trumpCard)
@@ -248,5 +262,7 @@ namespace FoolGame.Uil.Window
             GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnMovesEnded(false);
         }
+
+       
     }
 }

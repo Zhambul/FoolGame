@@ -25,5 +25,18 @@ namespace FoolGame.Bll
                 ImageSource = ConvertToImageSource(bitmap)
             };
         }
+
+        public static int GetAppId()
+        {
+            return 5199712;
+        }
+        public static string GetTelephone()
+        {
+            return "89999896178";
+        }
+        public static string GetPassword()
+        {
+            return "Ivavur2788";
+        }
     }
 }
