@@ -15,7 +15,7 @@ namespace FoolGame.Bll.Game
         private readonly IDeck _deck;
         private readonly IGameCallback _gameCallback;
         public ICardCollection TableCards { get; set; }
-        private ISharable _sharable;
+        private readonly ISharable _sharable;
         public Game(IPlayer userPlayer, IPlayer compPlayer, IDeck deck,ICardCollection tableCards, IGameCallback gameCallback, ISharable sharable)
         {
             UserPlayer = userPlayer;
@@ -78,7 +78,6 @@ namespace FoolGame.Bll.Game
 
             }
         }
-
         public void OnMovesEnded(bool switchRoles)
         {
             GiveCards();
@@ -121,10 +120,6 @@ namespace FoolGame.Bll.Game
 
         private bool UserPlayerDefends(ICard card)
         {
-            if (card == null)
-            {
-                return false;
-            }
             var tableCard = TableCards.Cards.Last();
             
             if (card.Suit == _deck.TrumpSuit && tableCard.Suit != _deck.TrumpSuit)
@@ -169,10 +164,6 @@ namespace FoolGame.Bll.Game
 
         private bool CheckIsSuitableCard(ICard card)
         {
-            if (card == null)
-            {
-                throw new Exception();
-            }
             if (TableCards.Cards.Count == 0)
             {
                 return true;

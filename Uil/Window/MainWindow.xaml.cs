@@ -143,8 +143,6 @@ namespace FoolGame.Uil.Window
             PassButtonVisibility = Visibility.Hidden;
             GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnGameStarted();
-
-          
         }
 
         private void InitGame()
@@ -157,10 +155,6 @@ namespace FoolGame.Uil.Window
             OpponentCards = _opponentPlayer.CardCollection.Cards;
             Cards = _userPlayer.CardCollection.Cards;
             TableCards = _game.TableCards.Cards;
-            if (MessageBox.Show("Поздравляю! Вы выйграли", "Поделиться") == MessageBoxResult.OK)
-            {
-                new VkHelper().Share();
-            }
         }
 
         public void OnDeckChanged(int countOfCardsInDeck)
