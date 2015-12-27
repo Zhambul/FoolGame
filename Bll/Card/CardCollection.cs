@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 
 namespace FoolGame.Bll.Card
 {
@@ -32,6 +33,21 @@ namespace FoolGame.Bll.Card
         public ICard GetLastCard()
         {
             return Cards.Last();
+        }
+
+        public void RemoveCardAt(int i)
+        {
+            Cards.RemoveAt(i);
+        }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+            foreach (var card in Cards)
+            {
+                result.Append(card);
+            }
+            return result.ToString();
         }
     }
 }

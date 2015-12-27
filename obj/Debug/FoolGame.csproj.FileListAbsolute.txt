@@ -22,3 +22,7 @@ c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame
 c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.csproj.GenerateResource.Cache
 c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.exe
 c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\FoolGame.pdb
+c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\Uil\Window\GameStart.baml
+c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\Uil\Window\GameStart.g.cs
+c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\Uil\Window\VkPassword.baml
+c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\obj\Debug\Uil\Window\VkPassword.g.cs

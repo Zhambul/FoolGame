@@ -9,14 +9,14 @@ namespace FoolGame.Bll.CardFabric
     {
         private readonly ICardIniter _cardIniter;
 
-        private List<ICard> _cards;
+        public CardCollection Cards { get; set; }
         private List<CardSuit> _suits;
         private List<CardValue> _values;
         private Random random;
         public CardFabric(ICardIniter cardIniter)
         {
             _cardIniter = cardIniter;
-            _cards = new List<ICard>();
+            Cards = new CardCollection();
             _suits = new List<CardSuit>();
             _values = new List<CardValue>();
             random = new Random();
@@ -34,7 +34,7 @@ namespace FoolGame.Bll.CardFabric
                     ImageSource backImage = _cardIniter.GetBackImageSource();
                     ImageSource frontImage = _cardIniter.GetFrontImageSource(cardSuit, cardValue);
 
-                    _cards.Add(new Card.Card()
+                    Cards.AddCard(new Card.Card()
                     {
                         Suit = cardSuit,
                         Value = cardValue,
@@ -69,11 +69,16 @@ namespace FoolGame.Bll.CardFabric
 
         public ICard GetCard()
         {
-            int generatedIndex = random.Next(_cards.Count - 1);
-            var card = _cards[generatedIndex];
-            _cards.RemoveAt(generatedIndex);
+            int generatedIndex = random.Next(Cards.Count - 1);
+            var card = Cards.GetCardAt(generatedIndex);
+            Cards.RemoveCardAt(generatedIndex);
 
             return card;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("CardFabric:{0}", Cards);
         }
     }
 }

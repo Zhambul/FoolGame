@@ -61,11 +61,24 @@ namespace FoolGame.Bll.Card
      
         public ICard GetNextCard()
         {
-            int index = new Random().Next(0,CardCollection.Count+1);
-            ICard card = CardCollection.Cards[index];
-            CardCollection.RemoveCard(card);
-            _gameWindow.OnDeckChanged(CardCollection.Count);
-            return card;
+            try
+            {
+                int index = new Random().Next(0, CardCollection.Count + 1);
+                ICard card = CardCollection.Cards[index];
+                CardCollection.RemoveCard(card);
+                _gameWindow.OnDeckChanged(CardCollection.Count);
+                return card;
+            }
+            catch (Exception)
+            {
+                return GetNextCard();
+                throw;
+            }
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Deck:{0},{1},{2},{3},{4}",TrumpSuit,TrumpCard,CardCollection, CardFabric, CardLimit);
         }
     }
 }

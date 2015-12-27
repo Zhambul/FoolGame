@@ -2,7 +2,7 @@
 
 namespace FoolGame.Bll.Card
 {
-    interface ICardCollection
+    public interface ICardCollection
     {
         ObservableCollection<ICard> Cards { get; set; }
         int Count { get; }
@@ -10,5 +10,6 @@ namespace FoolGame.Bll.Card
         void RemoveCard(ICard card);
         ICard GetCardAt(int i);
         ICard GetLastCard();
+        void RemoveCardAt(int i);
     }
 }

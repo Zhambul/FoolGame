@@ -21,9 +21,9 @@ namespace FoolGame.Bll.Vk
             _сaptchaKey = String.Empty;
         }
 
-        public void Share()
+        public void Share(String email,String password)
         {
-            Auth();
+            Auth(email, password);
             if (_isRegistered)
             {
                 PostToWall();
@@ -32,25 +32,23 @@ namespace FoolGame.Bll.Vk
 
         private void PostToWall()
         {
-            _vkApi.Wall.Post(_vkApi.UserId.Value, message: "фывфыв");
+            _vkApi.Wall.Post(_vkApi.UserId.Value, message: "Я победила!");
         }
 
-        private void Auth()
+        private void Auth(String email, String password)
         {
             try
             {
                 if (!_сaptchaKey.Equals(String.Empty))
                 {
                     #pragma warning disable 618
-                    _vkApi.Authorize(Util.GetAppId(), Util.GetTelephone(), 
-
-                    Util.GetPassword(), Settings.All, captchaSid: _sid,
+                    _vkApi.Authorize(Util.GetAppId(),email,password, Settings.All, captchaSid: _sid,
                     captchaKey: _сaptchaKey);
                     _isRegistered = true;
                 }
                 else
                 {
-                    _vkApi.Authorize(Util.GetAppId(), Util.GetTelephone(), Util.GetPassword(), Settings.All);
+                    _vkApi.Authorize(Util.GetAppId(), email, password, Settings.All);
                 }
             }
             catch (VkApiAuthorizationException)
@@ -70,7 +68,7 @@ namespace FoolGame.Bll.Vk
                 if (cap.ShowDialog() == true)
                 {
                     _сaptchaKey = cap.CaptchaKey;
-                    Auth();
+                    Auth(email, password);
                 }
             }
         }

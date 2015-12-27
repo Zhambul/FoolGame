@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 c:\my documents\visual studio 2013\Projects\FoolGame\FoolGame\App.xaml
-2678886558
+41080150285
 
-26927640256
+30-304615303
 16-371859257
-Uil\Window\CaptchaPage.xaml;Uil\Window\MainWindow.xaml;
+Uil\Window\CaptchaPage.xaml;Uil\Window\GameStart.xaml;Uil\Window\MainWindow.xaml;Uil\Window\VkPassword.xaml;
 
 False
 

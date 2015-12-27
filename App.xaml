@@ -1,7 +1,7 @@
 ﻿<Application x:Class="FoolGame.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Uil/Window/MainWindow.xaml">
+             StartupUri="Uil/Window/GameStart.xaml">
     <Application.Resources>
          
     </Application.Resources>

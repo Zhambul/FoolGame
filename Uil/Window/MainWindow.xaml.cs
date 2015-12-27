@@ -14,6 +14,7 @@ using FoolGame.Bll.Card;
 using FoolGame.Bll.CardFabric;
 using FoolGame.Bll.Game;
 using FoolGame.Bll.Vk;
+using FoolGame.Dbl;
 using VkNet;
 using VkNet.Categories;
 using VkNet.Enums.Filters;
@@ -135,25 +136,34 @@ namespace FoolGame.Uil.Window
         IPlayer _userPlayer;
         IPlayer _opponentPlayer;
         #endregion
-        public MainWindow()
+        public MainWindow(IGame game)
         {
             InitializeComponent();
             DataContext = this;
-            InitGame();
+            InitGame(game);
             PassButtonVisibility = Visibility.Hidden;
             GetCardsButtonVisibility = Visibility.Hidden;
             _game.OnGameStarted();
+            new DbHelper().Save(_game);
         }
 
-        private void InitGame()
+        private void InitGame(IGame game)
         {
-            IDeck deck = new Deck(new CardCollection(), new CardFabric(new CardIniter()), this);
             _userPlayer = new Player(new CardCollection());
             _opponentPlayer = new Player(new CardCollection());
-            _game = new Game(_userPlayer,_opponentPlayer,deck,new CardCollection(),this, new VkHelper());
-            
-            OpponentCards = _opponentPlayer.CardCollection.Cards;
-            Cards = _userPlayer.CardCollection.Cards;
+            if (game == null)
+            {
+                IDeck deck = new Deck(new CardCollection(), new CardFabric(new CardIniter()), this);
+                _game = new Game(_userPlayer, _opponentPlayer, deck, new CardCollection(), this, new VkHelper());
+            }
+            else
+            {
+                _userPlayer.GameRole = GameRole.Attacker;
+                _opponentPlayer.GameRole = GameRole.Defender;
+            }
+
+            OpponentCards = _game.CompPlayer.CardCollection.Cards;
+            Cards = _game.UserPlayer.CardCollection.Cards;
             TableCards = _game.TableCards.Cards;
         }
 

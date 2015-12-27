@@ -2,12 +2,13 @@
 
 namespace FoolGame.Bll.Game
 {
-    enum GameRole
+    public enum GameRole
     {
         Attacker,
         Defender
     }
-    interface IPlayer
+
+    public interface IPlayer
     {
         ICardCollection CardCollection { get; }
         int CardLimit { get; }

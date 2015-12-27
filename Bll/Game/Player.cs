@@ -7,12 +7,10 @@ namespace FoolGame.Bll.Game
         public ICardCollection CardCollection { get; private set; }
         public int CardLimit { get; private set; }
         public GameRole GameRole { get; set; }
-
         public void AddCard(ICard card)
         {
             CardCollection.AddCard(card);
         }
-
         public void RemoveCard(ICard card)
         {
             CardCollection.RemoveCard(card);

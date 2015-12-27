@@ -65,7 +65,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Uil\Window\VkPassword.xaml.cs">
+      <DependentUpon>VkPassword.xaml</DependentUpon>
+    </Compile>
     <Page Include="Uil\Window\CaptchaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Uil\Window\GameStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -94,16 +101,25 @@
     <Compile Include="Bll\Game\IPlayer.cs" />
     <Compile Include="Bll\Game\Player.cs" />
     <Compile Include="Bll\Util.cs" />
-    <Compile Include="Bll\Vk\ISharable.cs" />
-    <Compile Include="Bll\Vk\VkHelper.cs" />
+    <Compile Include="Bll\Share\ISharable.cs" />
+    <Compile Include="Bll\Share\VkHelper.cs" />
+    <Compile Include="Dbl\DbHelper.cs" />
+    <Compile Include="Dbl\IDbHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Uil\Window\CaptchaPage.xaml.cs">
       <DependentUpon>CaptchaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Uil\Window\GameStart.xaml.cs">
+      <DependentUpon>GameStart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Uil\Window\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Uil\Window\VkPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

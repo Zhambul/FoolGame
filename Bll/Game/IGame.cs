@@ -2,7 +2,7 @@
 
 namespace FoolGame.Bll.Game
 {
-    interface IGame
+    public interface IGame
     {
         IPlayer UserPlayer { get; }
         IPlayer CompPlayer { get; }

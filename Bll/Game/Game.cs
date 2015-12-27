@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using FoolGame.Bll.Card;
 using FoolGame.Bll.Vk;
+using FoolGame.Uil.Window;
 
 namespace FoolGame.Bll.Game
 {
@@ -35,6 +37,17 @@ namespace FoolGame.Bll.Game
                 CompPlayer.GameRole = GameRole.Defender;
             }
             _gameCallback.OnRoleSwith(UserPlayer.GameRole == GameRole.Attacker);
+        }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+            result.AppendLine(_deck.CardCollection.Count + ",");
+            foreach (var tableCard in TableCards.Cards)
+            {
+                result.AppendLine(String.Format("{0},{1}",tableCard.Suit,tableCard.Value));
+            }
+            return result.ToString();
         }
 
         private void SwitchRoles()
@@ -113,7 +126,7 @@ namespace FoolGame.Bll.Game
             {
                 return;
             }
-
+            CheckWin();
             _gameCallback.OnGetCardsButtonHidden();
             OnComputerMove(card);
         }
@@ -182,19 +195,23 @@ namespace FoolGame.Bll.Game
             {
                 CompPlayerDefends(card);
             }
-
+            CheckWin();
         }
 
         public void CheckWin()
         {
-            if (UserPlayer.CardCollection.Count == 0)
+            if (UserPlayer.CardCollection.Count == 0 && _deck.CardCollection.Count == 0)
             {
                 if (MessageBox.Show("Поздравляю! Вы выйграли", "Поделиться") == MessageBoxResult.OK)
                 {
-                    _sharable.Share();
+                    VkPassword vkPassword = new VkPassword();
+                    if (vkPassword.ShowDialog() == true)
+                    {
+                        _sharable.Share(vkPassword.Email,vkPassword.Password);
+                    }
                 }
             }
-            else if (CompPlayer.CardCollection.Count == 0)
+            else if (CompPlayer.CardCollection.Count == 0 && _deck.CardCollection.Count == 0)
             {
                 MessageBox.Show("Вы проиграли");
             } 

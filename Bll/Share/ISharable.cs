@@ -8,6 +8,6 @@ namespace FoolGame.Bll.Vk
 {
     interface ISharable
     {
-        void Share();
+        void Share(string email, string password);
     }
 }
