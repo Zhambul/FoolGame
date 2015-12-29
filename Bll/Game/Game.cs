@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using FoolGame.Bll.Card;
+using FoolGame.Bll.CardFabric;
 using FoolGame.Bll.Vk;
 using FoolGame.Uil.Window;
 
@@ -13,7 +14,7 @@ namespace FoolGame.Bll.Game
     {
         public IPlayer UserPlayer { get; private set; }
         public IPlayer CompPlayer { get; private set; }
-
+        private ICardIniter _cardIniter;
         private readonly IDeck _deck;
         private readonly IGameCallback _gameCallback;
         public ICardCollection TableCards { get; set; }
@@ -85,7 +86,7 @@ namespace FoolGame.Bll.Game
                 }
                 if (userPlayer)
                 {
-                    card.CardAppearance = new CardOpen();
+                    card.CardAppearance = new CardOpenState();
                 }
                 player.AddCard(card);
 
@@ -249,7 +250,7 @@ namespace FoolGame.Bll.Game
                 return;
             }
             var resultCard = GetBestCard(suitableCards);
-            resultCard.CardAppearance = new CardOpen();
+            resultCard.CardAppearance = new CardOpenState();
             CompPlayer.CardCollection.RemoveCard(resultCard);
             TableCards.Cards.Add(resultCard);
 
@@ -261,7 +262,7 @@ namespace FoolGame.Bll.Game
             while (TableCards.Cards.Count != 0)
             {
                 var tableCard = TableCards.Cards.Last();
-                tableCard.CardAppearance = new CardClosed();
+                tableCard.CardAppearance = _cardIniter.GetClosedAppearance();
                 TableCards.RemoveCard(tableCard);
                 CompPlayer.CardCollection.AddCard(tableCard);
             }
@@ -347,7 +348,7 @@ namespace FoolGame.Bll.Game
                 bestCard = GetBestCard(suitableCardsFotAttack);
             }
             _gameCallback.OnGetCardsButtonVisible();
-            bestCard.CardAppearance = new CardOpen();
+            bestCard.CardAppearance = new CardOpenState();
             CompPlayer.CardCollection.RemoveCard(bestCard);
             TableCards.Cards.Add(bestCard);
         }

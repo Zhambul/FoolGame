@@ -31,7 +31,7 @@ namespace FoolGame.Bll.CardFabric
             {
                 foreach (var cardValue in _values)
                 {
-                    ICardAppearanceStrategy cardAppearance = new CardClosed();
+                    ICardAppearanceState cardAppearance = new CardClosedState();
 //                    ImageSource backImage = _cardIniter.GetBackImageSource();
 //                    ImageSource frontImage = _cardIniter.GetFrontImageSource(cardSuit, cardValue);
 

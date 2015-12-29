@@ -9,14 +9,14 @@ namespace FoolGame.Bll.CardFabric
 {
     class CardIniter : ICardIniter
     {
-        private readonly ICardAppearanceStrategy _closedCard;
+        private readonly ICardAppearanceState _closedCard;
 
         public CardIniter()
         {
-            _closedCard = new CardClosed();
+            _closedCard = new CardClosedState();
         }
 
-        public ICardAppearanceStrategy GetClosedAppearance()
+        public ICardAppearanceState GetClosedAppearance()
         {
             return _closedCard;
         }

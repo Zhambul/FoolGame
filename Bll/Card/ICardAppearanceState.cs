@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace FoolGame.Bll.Card
 {
-    public interface ICardAppearanceStrategy
+    public interface ICardAppearanceState
     {
         ImageSource GetAppearance(ICard card);
     }

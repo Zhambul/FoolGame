@@ -8,7 +8,7 @@ using FoolGame.Properties;
 
 namespace FoolGame.Bll.Card
 {
-    class CardClosed : ICardAppearanceStrategy
+    class CardClosedState : ICardAppearanceState
     {
         public ImageSource GetAppearance(ICard card)
         {

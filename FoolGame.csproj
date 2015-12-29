@@ -65,9 +65,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Bll\Card\CardClosed.cs" />
-    <Compile Include="Bll\Card\CardOpen.cs" />
-    <Compile Include="Bll\Card\ICardAppearanceStrategy.cs" />
+    <Compile Include="Bll\Card\CardClosedState.cs" />
+    <Compile Include="Bll\Card\CardOpenState.cs" />
+    <Compile Include="Bll\Card\ICardAppearanceState.cs" />
     <Compile Include="Uil\Window\VkPassword.xaml.cs">
       <DependentUpon>VkPassword.xaml</DependentUpon>
     </Compile>

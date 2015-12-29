@@ -5,6 +5,6 @@ namespace FoolGame.Bll.CardFabric
 {
     interface ICardIniter
     {
-        ICardAppearanceStrategy GetClosedAppearance();
+        ICardAppearanceState GetClosedAppearance();
     }
 }

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using FoolGame.Properties;
 
 namespace FoolGame.Bll.Card
 {
-    class CardOpen : ICardAppearanceStrategy
+    class CardOpenState : ICardAppearanceState
     {
         public ImageSource GetAppearance(ICard card)
         {

@@ -167,7 +167,7 @@ namespace FoolGame.Uil.Window
 
         public void OnTrumpCardSelected(ICard trumpCard)
         {
-            TrumpCard = new CardOpen().GetAppearance(trumpCard);
+            TrumpCard = new CardOpenState().GetAppearance(trumpCard);
         }
 
         private void Card_OnMouseMove(object sender, MouseEventArgs e)
