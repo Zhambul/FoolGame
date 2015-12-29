@@ -9,22 +9,17 @@ namespace FoolGame.Bll.CardFabric
 {
     class CardIniter : ICardIniter
     {
-        public ImageSource GetBackImageSource()
+        private readonly ICardAppearanceStrategy _closedCard;
+
+        public CardIniter()
         {
-            return Util.ConvertToImageSource(Resources.Back);
+            _closedCard = new CardClosed();
         }
 
-        public ImageSource GetFrontImageSource(CardSuit cardSuit, CardValue cardValue)
+        public ICardAppearanceStrategy GetClosedAppearance()
         {
-            ResourceManager rm = Resources.ResourceManager;
-            String sad = GetStringNameForCard(cardSuit, cardValue);
-            Bitmap myImage = (Bitmap)rm.GetObject(sad);
-            return Util.ConvertToImageSource(myImage);
+            return _closedCard;
         }
 
-        private String GetStringNameForCard(CardSuit cardSuit, CardValue cardValue)
-        {
-            return String.Format("{0}_{1}", cardSuit, cardValue);
-        }
     }
 }

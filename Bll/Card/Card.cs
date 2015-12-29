@@ -3,22 +3,20 @@ using System.Windows.Media;
 
 namespace FoolGame.Bll.Card
 {
-    class Card : ICard
+    public class Card : ICard
     {
         public CardSuit Suit { get; set; }
         public CardValue Value { get; set; }
         public ImageSource CurrentImage { get; set; }
-        public ImageSource BackImage { get; set; }
-        public ImageSource FrontImage { get; set; }
 
-        private CardVisibilityState _visibilityState;
-        public CardVisibilityState VisibilityState
+        private ICardAppearanceStrategy _cardAppearance;
+        public ICardAppearanceStrategy CardAppearance
         {
-            get { return _visibilityState; }
+            get { return _cardAppearance; }
             set
             {
-                _visibilityState = value;
-                CurrentImage = value == CardVisibilityState.Visible ? FrontImage : BackImage;
+                _cardAppearance = value;
+                CurrentImage = value.GetAppearance(this);
             }
         }
     }

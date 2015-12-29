@@ -1,24 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using FoolGame.Annotations;
-using FoolGame.Bll;
 using FoolGame.Bll.Card;
 using FoolGame.Bll.CardFabric;
 using FoolGame.Bll.Game;
 using FoolGame.Bll.Vk;
 using FoolGame.Dbl;
-using VkNet;
-using VkNet.Categories;
-using VkNet.Enums.Filters;
-using VkNet.Exception;
 
 namespace FoolGame.Uil.Window
 {
@@ -174,7 +167,7 @@ namespace FoolGame.Uil.Window
 
         public void OnTrumpCardSelected(ICard trumpCard)
         {
-            TrumpCard = trumpCard.FrontImage;
+            TrumpCard = new CardOpen().GetAppearance(trumpCard);
         }
 
         private void Card_OnMouseMove(object sender, MouseEventArgs e)

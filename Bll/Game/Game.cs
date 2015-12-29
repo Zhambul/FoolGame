@@ -85,7 +85,7 @@ namespace FoolGame.Bll.Game
                 }
                 if (userPlayer)
                 {
-                    card.VisibilityState = CardVisibilityState.Visible;
+                    card.CardAppearance = new CardOpen();
                 }
                 player.AddCard(card);
 
@@ -249,7 +249,7 @@ namespace FoolGame.Bll.Game
                 return;
             }
             var resultCard = GetBestCard(suitableCards);
-            resultCard.VisibilityState = CardVisibilityState.Visible;
+            resultCard.CardAppearance = new CardOpen();
             CompPlayer.CardCollection.RemoveCard(resultCard);
             TableCards.Cards.Add(resultCard);
 
@@ -261,7 +261,7 @@ namespace FoolGame.Bll.Game
             while (TableCards.Cards.Count != 0)
             {
                 var tableCard = TableCards.Cards.Last();
-                tableCard.VisibilityState = CardVisibilityState.NotVisible;
+                tableCard.CardAppearance = new CardClosed();
                 TableCards.RemoveCard(tableCard);
                 CompPlayer.CardCollection.AddCard(tableCard);
             }
@@ -347,7 +347,7 @@ namespace FoolGame.Bll.Game
                 bestCard = GetBestCard(suitableCardsFotAttack);
             }
             _gameCallback.OnGetCardsButtonVisible();
-            bestCard.VisibilityState = CardVisibilityState.Visible;
+            bestCard.CardAppearance = new CardOpen();
             CompPlayer.CardCollection.RemoveCard(bestCard);
             TableCards.Cards.Add(bestCard);
         }

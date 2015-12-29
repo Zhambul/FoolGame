@@ -5,7 +5,6 @@ namespace FoolGame.Bll.CardFabric
 {
     interface ICardIniter
     {
-        ImageSource GetBackImageSource();
-        ImageSource GetFrontImageSource(CardSuit cardSuit, CardValue cardValue);
+        ICardAppearanceStrategy GetClosedAppearance();
     }
 }

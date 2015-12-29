@@ -12,7 +12,6 @@ namespace FoolGame.Bll.Card
         public ICardCollection CardCollection { get; private set; }
         public ICardFabric CardFabric { get; private set; }
         public int CardLimit { get; private set; }
-
         public Deck(ICardCollection cardCollection, ICardFabric cardFabric, IDeckChanged gameWindow)
         {
             CardCollection = cardCollection;
@@ -23,7 +22,6 @@ namespace FoolGame.Bll.Card
             TrumpSuit = GetRandomTrumpSuit();
             TrumpCard = GetRandomTrumpCard();
         }
-
         private ICard GetRandomTrumpCard()
         {
             while (true)
@@ -38,7 +36,6 @@ namespace FoolGame.Bll.Card
                 }
             }
         }
-
         private CardSuit GetRandomTrumpSuit()
         {
             switch (new Random().Next(0,4))

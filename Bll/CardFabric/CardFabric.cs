@@ -31,16 +31,15 @@ namespace FoolGame.Bll.CardFabric
             {
                 foreach (var cardValue in _values)
                 {
-                    ImageSource backImage = _cardIniter.GetBackImageSource();
-                    ImageSource frontImage = _cardIniter.GetFrontImageSource(cardSuit, cardValue);
+                    ICardAppearanceStrategy cardAppearance = new CardClosed();
+//                    ImageSource backImage = _cardIniter.GetBackImageSource();
+//                    ImageSource frontImage = _cardIniter.GetFrontImageSource(cardSuit, cardValue);
 
                     Cards.AddCard(new Card.Card()
                     {
                         Suit = cardSuit,
                         Value = cardValue,
-                        BackImage = backImage,
-                        FrontImage = frontImage,
-                        VisibilityState = CardVisibilityState.NotVisible
+                        CardAppearance = cardAppearance
                     });
                 }
             }

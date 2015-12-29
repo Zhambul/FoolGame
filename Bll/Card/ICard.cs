@@ -33,9 +33,6 @@ namespace FoolGame.Bll.Card
         CardSuit Suit { get; set; }
         CardValue Value { get; set; }
         ImageSource CurrentImage { get; set; }
-        ImageSource BackImage { get; }
-        ImageSource FrontImage { get; }
-
-        CardVisibilityState VisibilityState { get; set; }
+        ICardAppearanceStrategy CardAppearance { get; set; }
     }
 }
